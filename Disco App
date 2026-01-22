@@ -1,0 +1,119 @@
+from rich import print
+from rich.panel import Panel
+
+invitados=[]
+precio=0
+
+def menu():
+    print(Panel(" 1)Entrar a la discoteca \n" \
+                " 2)Salir de la discoteca \n" \
+                " 3)Ver invitados \n " \
+                "4)Pedir una bebida \n " \
+                "5) Elegir música \n " \
+                "6)Salir"
+                , title="BIENVENIDOS A NEBULA CLUB"))
+    
+    try:
+        select=int(input("Introduzca una opción = "))
+    except ValueError:
+        print("Opción inválida")
+
+    match select:
+        case 1:
+            verificar_invitado()
+
+        case 2:
+            eliminar_invitado()
+        
+        case 3:
+            ver_invitados()
+        
+        case 4:
+            pedir_bebida()
+        
+        case 5:
+            pass
+        
+        case 6:
+            exit()
+
+    resp=input("¿Desea continuar? = ").lower()
+    if resp=="no":
+        exit()
+
+def verificar_invitado():
+    nombre=input("Nombre = ")
+    edad=int(input("Edad = "))
+
+    if edad<18:
+        print("Solo se permiten personas mayores de edad")
+    else:
+        print("Se añadio a la lista de invitados ✔")
+        invitados.append(nombre)
+
+def eliminar_invitado():
+    nombre=input("Ingrese el nombre de la persona que deseea retirarse = ")
+
+    if nombre not in invitados:
+        print("Invitado no encontrado.")
+    else:
+        invitados.remove(nombre)
+        print("Se elimino al invitado correctamente ✔")
+
+
+def ver_invitados():
+    for i,j in enumerate(invitados, start=1):
+        print(f'[{i}] {j}')
+
+
+def pedir_bebida():
+    global precio
+    bebidas={
+        "wisky":12.00,
+        "psyco sour":8.40,
+        "tekila":9.35,
+        "cuba libre":5.56
+    }
+
+    bebidas_orden=[]
+
+    print("======================")
+    print("BEBIDAS DISPONIBLES")
+    print("======================")
+    print("\n")
+
+    print(f'[1] Wisky --> "S/12.00' "\n"
+          f'[2] Pysco Sour --> S/8.40' "\n"
+          f'[3] Tekila --> S/9.35' "\n"
+          f'[4] Cuba Libre --> 5.56'"\n")
+    
+    bebida=input("Ingrese el nombre de la bebida que desee comprar = ")
+    nombre=input("A nombre de quien desea comprar la bebida? = ")
+
+    if nombre not in invitados:
+        print(f'{nombre} no se encuentra en la lista de invitados.')
+    
+    elif bebida not in bebidas.keys():
+        print(f"No se encuentra la bebida {bebida}")
+
+    else:
+        for a,b in zip(invitados, bebidas.keys()):
+            orden=(a,b)
+            bebidas_orden.append(orden)
+
+        print("Orden: ")
+        for i,j in enumerate(bebidas_orden, start=1):
+            print(f'[{i}] {j}')
+
+def main():
+    menu()
+
+    
+resp="si"
+while resp=="si":
+    main()
+
+
+
+    
+
